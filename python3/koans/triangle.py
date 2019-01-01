@@ -16,9 +16,25 @@
 # and
 #   about_triangle_project_2.py
 #
+
+def pythagoras_approves(sides):
+    return(sum([i * i for i in sides]) == 2 * max(sides) ** 2)
+
+def triangle_inequalty_rule_one(sides):
+    # https://sciencing.com/rules-length-triangle-sides-8606207.html
+    return(sum(sides) < 2 * max(sides))
+
 def triangle(a, b, c):
     # DELETE 'PASS' AND WRITE THIS CODE
-    pass
+    sides = [a, b, c]
+    if 0 in sides:
+        raise TriangleError('Zero length sides prohibited.')
+    if min(sides) < 0:
+        raise TriangleError('Negative length sides prohibited.')
+    if (triangle_inequalty_rule_one(sides)):
+        raise TriangleError('The sum of the two shorter sides must be exceed the longer.')
+    return ['point', 'equilateral', 'isosceles', 'scalene'][len(set(sides))]
+
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError(Exception):
