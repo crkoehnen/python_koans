@@ -32,9 +32,32 @@ from runner.koan import *
 #
 # Your goal is to write the score method.
 
+def score_remainder(side, count):
+    if side == 1:
+        return 100 * count
+    elif side == 5:
+        return 50 * count
+    else:
+        return 0
+
+def score_faces(side_count):
+    side, count = side_count
+    if (side == 1 and count > 2):
+        return 1000 + score_remainder(1, max(count - 3, 0))
+    elif (count > 2):
+        return 100 * side + score_remainder(side, max(count - 3, 0))
+    else:
+        return score_remainder(side, count)
+
+def freq(dice):
+    answer = {}
+    for die in dice:
+        answer[die] = answer.get(die, 0) + 1
+    return answer
+
 def score(dice):
     # You need to write this method
-    pass
+    return sum([score_faces(sf) for sf in freq(dice).items()])
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
